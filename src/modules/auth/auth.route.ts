@@ -1,22 +1,29 @@
 
 import { Router } from "express";
 import validateRequest from "../../middlewares/validateRequest.js";
-import { loginValidationSchema, registerValidationSchema } from "./auth.validation.js";
+import {  loginSchema, registerSchema } from "./auth.validation.js";
 import { AuthController } from "./auth.controller.js";
+import { authenticate } from "../../middlewares/auth.middleware.js";
 
 
 const router = Router();
 
 router.post(
   "/register",
-  validateRequest(registerValidationSchema),
+  validateRequest(registerSchema),
   AuthController.register
 );
 
 router.post(
   "/login",
-  validateRequest(loginValidationSchema),
+  validateRequest(loginSchema),
   AuthController.login
+);
+// Protected route
+router.get(
+  "/me",
+  authenticate,
+  AuthController.getCurrentUser
 );
 
 export const authRouter = router;

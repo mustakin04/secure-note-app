@@ -51,7 +51,17 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
+const getCurrentUser = async (req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "Authenticated user",
+    data: req.user,
+  });
+};
+
+
 export const AuthController = {
   register,
   login,
+   getCurrentUser,
 };

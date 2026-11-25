@@ -1,18 +1,15 @@
 
-import { type RequestHandler } from "express";
+
+import type { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 
-const validateRequest = <
-  T extends z.ZodType<{ body: unknown }>
->(
-  schema: T
-): RequestHandler => {
-  return (req, res, next) => {
-    const result = schema.safeParse({
-      body: req.body,
-      params: req.params,
-      query: req.query,
-    });
+const validateRequest = (
+  schema: z.ZodObject
+)=> {
+  return (req:Request, res:Response, next:NextFunction) => {
+    const result = schema.safeParse(
+       req.body,
+    );
 
     if (!result.success) {
       res.status(400).json({
@@ -27,8 +24,7 @@ const validateRequest = <
       return;
     }
 
-    req.body = result.data.body;
-
+    req.body = result.data;
     next();
   };
 };

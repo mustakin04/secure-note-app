@@ -1,12 +1,13 @@
 
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import type { LoginInput, RegisterInput } from "./auth.validation.js";
+
 import User from "../user/user.model.js";
+import type { ILoginPayload, IRegistrationPyloadf } from "./auth.interface.js";
 
 
 
-const registerUser = async (payload: RegisterInput) => {
+const registerUser = async (payload: IRegistrationPyloadf) => {
   // 1. Check existing user
   const existingUser = await User.findOne({
     email: payload.email,
@@ -38,7 +39,7 @@ const registerUser = async (payload: RegisterInput) => {
   };
 };
 
-const loginUser = async (payload: LoginInput) => {
+const loginUser = async (payload: ILoginPayload) => {
   // 1. Find user by email
   const user = await User.findOne({
     email: payload.email,
