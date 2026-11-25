@@ -72,7 +72,7 @@ const getSingleNote = async (req: Request, res: Response) => {
     const { userId, role } = req.user!;
 
     const result = await NoteService.getSingleNote(
-      req.params.id,
+      req.params.id as string ,
       userId,
       role
     );
@@ -104,7 +104,7 @@ const updateNote = async (req: Request, res: Response) => {
     const { userId } = req.user!;
 
     const result = await NoteService.updateNote(
-      req.params.id,
+      req.params.id as string,
       userId,
       req.body
     );
@@ -136,7 +136,7 @@ const deleteNote = async (req: Request, res: Response) => {
     const { userId } = req.user!;
 
     const result = await NoteService.deleteNote(
-      req.params.id,
+      req.params.id as string,
       userId
     );
 
